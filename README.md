@@ -1,31 +1,41 @@
 # Playwright Automation
 
-Cucumber + Playwright + TestNG test suite for the WebDriverUniversity Contact Us form, with cross-browser support, externalized configuration, PicoContainer dependency injection, and Allure reporting with automatic screenshot capture on failure.
+![Java](https://img.shields.io/badge/Java-17-007396?style=for-the-badge&logo=openjdk&logoColor=white)
+![Playwright](https://img.shields.io/badge/Playwright-1.61.0-2EAD33?style=for-the-badge&logo=playwright&logoColor=white)
+![Cucumber](https://img.shields.io/badge/Cucumber-7.34.4-23D96C?style=for-the-badge&logo=cucumber&logoColor=white)
+![TestNG](https://img.shields.io/badge/TestNG-runner-F7941E?style=for-the-badge&logoColor=white)
+![Allure](https://img.shields.io/badge/Allure-Report-FF3E00?style=for-the-badge&logo=qameta&logoColor=white)
+![Maven](https://img.shields.io/badge/Maven-build-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)
 
-## Stack
+## Overview
 
-- Java + Playwright
-- Cucumber (Gherkin, TestNG runner, PicoContainer DI)
-- Allure reporting
+This repository contains an automated end-to-end test suite built with Playwright and Cucumber, executed via a TestNG runner. The framework is designed around configurability, maintainability, and clear, evidence-backed reporting.
+
+Key capabilities:
+
+- **Cross-browser execution** — Chromium and Firefox, selectable at runtime.
+- **Externalized configuration** — browser, base URL, headless mode, and timing are driven entirely from a properties file and may be overridden via JVM system properties.
+- **Dependency injection** — step definition and hook classes are wired together via Cucumber's PicoContainer integration, avoiding static shared state between scenarios.
+- **Allure reporting** — every scenario is reported with a full step timeline; failed scenarios automatically capture and attach a screenshot of the application state at the point of failure.
 
 ## Configuration
 
-All environment values live in `src/test/resources/config/config.properties`:
+All environment values are defined in `src/test/resources/config/config.properties`:
 
-| Key             | Description                          |
-|-----------------|---------------------------------------|
-| `browser`       | `chromium` or `firefox`               |
-| `base.url`      | Site under test                       |
-| `headless`      | Run browser headless (`true`/`false`) |
-| `step.delay.ms` | Pause after each Gherkin step         |
+| Key             | Description                            |
+|-----------------|-----------------------------------------|
+| `browser`       | Target browser (`chromium` or `firefox`) |
+| `base.url`      | Base URL of the application under test  |
+| `headless`      | Whether to run headless (`true`/`false`) |
+| `step.delay.ms` | Pause applied after each Gherkin step   |
 
-Any key can be overridden at runtime via a JVM system property, e.g.:
+Any key may be overridden at runtime via a JVM system property without modifying the properties file, for example:
 
 ```bash
 java -Dbrowser=firefox -cp "$CP" org.testng.TestNG -testclass runner.ContactUsRunner
 ```
 
-## Running the tests
+## Running the Suite
 
 ```bash
 mvn dependency:build-classpath -Dmdep.outputFile=/tmp/cp.txt -q
@@ -33,16 +43,16 @@ CP=$(cat /tmp/cp.txt):target/classes:target/test-classes
 java -cp "$CP" org.testng.TestNG -testclass runner.ContactUsRunner
 ```
 
-## Allure report
+## Reporting
 
-Generate and open the report:
+Generate and view the Allure report:
 
 ```bash
 mvn io.qameta.allure:allure-maven:2.12.0:serve
 ```
 
-On failure, a screenshot of the page is automatically captured and attached to the failed scenario in the report (see `Hooks.java`).
+When a scenario fails, a screenshot of the current page state is automatically captured and attached to that scenario's entry in the report (see `Hooks.java`), providing immediate visual context for the failure without needing to re-run the test.
 
-### Sample: failed scenario report
+### Sample Report — Failed Scenario
 
 ![Failed scenario in Allure report](docs/screenshots/allure-failed-scenario-report.png)
