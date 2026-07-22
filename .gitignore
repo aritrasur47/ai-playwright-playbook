@@ -1,0 +1,7 @@
+target/
+test-output/
+.allure/
+*.class
+.settings/
+.classpath
+.project
