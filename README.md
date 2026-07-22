@@ -6,6 +6,7 @@
 ![TestNG](https://img.shields.io/badge/TestNG-runner-F7941E?style=for-the-badge&logoColor=white)
 ![Allure](https://img.shields.io/badge/Allure-Report-FF3E00?style=for-the-badge&logo=qameta&logoColor=white)
 ![Maven](https://img.shields.io/badge/Maven-build-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
 
 ## Overview
 
@@ -56,3 +57,7 @@ When a scenario fails, a screenshot of the current page state is automatically c
 ### Sample Report — Failed Scenario
 
 ![Failed scenario in Allure report](docs/screenshots/allure-failed-scenario-report.png)
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
