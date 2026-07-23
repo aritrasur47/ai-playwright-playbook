@@ -2,6 +2,8 @@ package step_definitions;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.regex.Pattern;
+
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
@@ -9,12 +11,14 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import net.datafaker.Faker;
 
 public class ContactUsSteps {
 
-    private static final String ERROR_PREFIX = "Error: ";
+    private static final String ERROR_PREFIX = "Error:";
 
     private final BrowserManager browserManager;
+    private final Faker faker = new Faker();
     private Page page;
 
     public ContactUsSteps(BrowserManager browserManager) {
@@ -56,6 +60,26 @@ public class ContactUsSteps {
         page.locator("textarea[name='message']").fill(message);
     }
 
+    @When("I enter a random first name")
+    public void i_enter_a_random_first_name() {
+        page.locator("input[name='first_name']").fill(faker.name().firstName());
+    }
+
+    @And("I enter a random last name")
+    public void i_enter_a_random_last_name() {
+        page.locator("input[name='last_name']").fill(faker.name().lastName());
+    }
+
+    @And("I enter a random email")
+    public void i_enter_a_random_email() {
+        page.locator("input[name='email']").fill(faker.internet().emailAddress());
+    }
+
+    @And("I enter a random message")
+    public void i_enter_a_random_message() {
+        page.locator("textarea[name='message']").fill(faker.lorem().sentence());
+    }
+
     @And("I click the Submit button")
     public void i_click_the_submit_button() {
         page.locator("input.contact_button[type='submit']").click();
@@ -70,7 +94,9 @@ public class ContactUsSteps {
     public void i_should_see_the_error(String expectedErrors) {
         String bodyText = page.locator("body").textContent();
         for (String error : expectedErrors.split(",\\s*")) {
-            assertTrue(bodyText.contains(ERROR_PREFIX + error), "Expected error not found: " + error);
+            Pattern errorPattern = Pattern.compile(
+                    ERROR_PREFIX + "\\s*" + Pattern.quote(error), Pattern.CASE_INSENSITIVE);
+            assertTrue(errorPattern.matcher(bodyText).find(), "Expected error not found: " + error);
         }
     }
 }

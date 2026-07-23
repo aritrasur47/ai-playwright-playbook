@@ -7,11 +7,12 @@ Feature: Contact Us form
     Given I go to the WebDriverUniversity website
     And I navigate to the Contact Us page
 
+  # Uses Datafaker to generate random values, since only the confirmation message is asserted here
   Scenario: Successful submission with valid details
-    When I enter "Jordan" as the first name
-    And I enter "Rivers" as the last name
-    And I enter "jordan.rivers@example.com" as the email
-    And I enter "Hello, I would like more information." as the message
+    When I enter a random first name
+    And I enter a random last name
+    And I enter a random email
+    And I enter a random message
     And I click the Submit button
     Then I should see the confirmation message "Thank You for your Message!"
 
