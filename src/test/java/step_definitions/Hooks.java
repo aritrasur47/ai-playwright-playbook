@@ -48,7 +48,6 @@ public class Hooks {
             return;
         }
         byte[] screenshot = page.screenshot(new Page.ScreenshotOptions().setType(ScreenshotType.PNG));
-        scenario.attach(screenshot, "image/png", scenario.getName());
         Allure.addAttachment(scenario.getName() + "-failure", "image/png",
                 new ByteArrayInputStream(screenshot), "png");
     }
