@@ -5,6 +5,7 @@
 ![Cucumber](https://img.shields.io/badge/Cucumber-7.34.4-23D96C?style=for-the-badge&logo=cucumber&logoColor=white)
 ![TestNG](https://img.shields.io/badge/TestNG-runner-F7941E?style=for-the-badge&logoColor=white)
 ![Allure](https://img.shields.io/badge/Allure-Report-FF3E00?style=for-the-badge&logo=qameta&logoColor=white)
+![Datafaker](https://img.shields.io/badge/Datafaker-random%20data-6E56CF?style=for-the-badge)
 ![Maven](https://img.shields.io/badge/Maven-build-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
 
@@ -18,6 +19,7 @@ Key capabilities:
 - **Externalized configuration** — browser, base URL, headless mode, and timing are driven entirely from a properties file and may be overridden via JVM system properties.
 - **Dependency injection** — step definition and hook classes are wired together via Cucumber's PicoContainer integration, avoiding static shared state between scenarios.
 - **Allure reporting** — every scenario is reported with a full step timeline; failed scenarios automatically capture and attach a screenshot of the application state at the point of failure.
+- **Randomized test data** — the successful-submission scenario uses [Datafaker](https://www.datafaker.net/) to generate random names, emails, and messages at runtime, rather than relying on hardcoded values.
 
 ## Configuration
 
