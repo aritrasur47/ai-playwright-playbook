@@ -25,13 +25,15 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh '''
-                    CP=$(cat target/cp.txt):target/classes:target/test-classes
-                    java -Dbrowser=${BROWSER} \
-                         -Dheadless=true \
-                         -Dcucumber.filter.tags="${CUCUMBER_TAGS}" \
-                         -cp "$CP" org.testng.TestNG -testclass runner.TestRunner
-                '''
+                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+                    sh '''
+                        CP=$(cat target/cp.txt):target/classes:target/test-classes
+                        java -Dbrowser=${BROWSER} \
+                             -Dheadless=true \
+                             -Dcucumber.filter.tags="${CUCUMBER_TAGS}" \
+                             -cp "$CP" org.testng.TestNG -testclass runner.TestRunner
+                    '''
+                }
             }
         }
 
@@ -44,6 +46,7 @@ pipeline {
 
     post {
         always {
+            step([$class: 'TestNGResultArchiver', testResultsPattern: 'test-output/testng-results.xml'])
             archiveArtifacts artifacts: 'target/allure-results/**, target/site/allure-maven-plugin/**', allowEmptyArchive: true
         }
     }
