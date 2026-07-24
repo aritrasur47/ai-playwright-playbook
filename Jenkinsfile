@@ -1,8 +1,8 @@
 pipeline {
     agent any
 
-    environment {
-        PATH = "/opt/homebrew/opt/openjdk/bin:/opt/homebrew/bin:${env.PATH}"
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
     }
 
     parameters {
@@ -10,7 +10,17 @@ pipeline {
         string(name: 'CUCUMBER_TAGS', defaultValue: 'not @demo-failure', description: 'Cucumber tag expression to filter scenarios')
     }
 
+    environment {
+        PATH = "/opt/homebrew/bin:/opt/homebrew/opt/openjdk@21/bin:${env.PATH}"
+    }
+
     stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
         stage('Build') {
             steps {
                 sh 'mvn -B test-compile'
