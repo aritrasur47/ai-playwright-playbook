@@ -1,3 +1,4 @@
+@contact-us
 Feature: Contact Us form
   As a visitor to WebDriverUniversity.com
   I want to submit the Contact Us form
@@ -8,6 +9,7 @@ Feature: Contact Us form
     And I navigate to the Contact Us page
 
   # Uses Datafaker to generate random values, since only the confirmation message is asserted here
+  @smoke
   Scenario: Successful submission with valid details
     When I enter a random first name
     And I enter a random last name
@@ -16,6 +18,7 @@ Feature: Contact Us form
     And I click the Submit button
     Then I should see the confirmation message "Thank You for your Message!"
 
+  @demo-failure
   Scenario: Submission fails against an incorrect expected confirmation message
     When I enter "Jordan" as the first name
     And I enter "Rivers" as the last name

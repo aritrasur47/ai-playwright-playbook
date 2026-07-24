@@ -4,10 +4,11 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
-        features = "src/test/resources/features/ContactUs.feature",
+        features = "src/test/resources/features",
         glue = "step_definitions",
         plugin = {"pretty", "html:target/cucumber-reports/ContactUs.html", "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"},
-        monochrome = true
+        monochrome = true,
+        tags = "not @demo-failure"
 )
-public class ContactUsRunner extends AbstractTestNGCucumberTests {
+public class TestRunner extends AbstractTestNGCucumberTests {
 }

@@ -3,7 +3,6 @@ package step_definitions;
 import java.io.ByteArrayInputStream;
 
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.ScreenshotType;
 
 import io.cucumber.java.After;
 import io.cucumber.java.AfterStep;
@@ -37,17 +36,16 @@ public class Hooks {
     @After
     public void tearDown(Scenario scenario) {
         if (scenario.isFailed()) {
-            captureScreenshot(scenario);
+            attachFailureScreenshot(scenario);
         }
         browserManager.close();
     }
 
-    private void captureScreenshot(Scenario scenario) {
-        Page page = browserManager.getPage();
-        if (page == null || page.isClosed()) {
+    private void attachFailureScreenshot(Scenario scenario) {
+        byte[] screenshot = browserManager.captureScreenshot();
+        if (screenshot == null) {
             return;
         }
-        byte[] screenshot = page.screenshot(new Page.ScreenshotOptions().setType(ScreenshotType.PNG));
         Allure.addAttachment(scenario.getName() + "-failure", "image/png",
                 new ByteArrayInputStream(screenshot), "png");
     }

@@ -7,6 +7,7 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.options.ScreenshotType;
 
 public class BrowserManager {
 
@@ -47,6 +48,13 @@ public class BrowserManager {
 
     public void setPage(Page page) {
         this.page = page;
+    }
+
+    public byte[] captureScreenshot() {
+        if (page == null || page.isClosed()) {
+            return null;
+        }
+        return page.screenshot(new Page.ScreenshotOptions().setType(ScreenshotType.PNG));
     }
 
     public void close() {

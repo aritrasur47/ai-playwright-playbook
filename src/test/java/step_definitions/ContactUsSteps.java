@@ -20,6 +20,8 @@ public class ContactUsSteps {
     private final BrowserManager browserManager;
     private final Faker faker = new Faker();
     private Page page;
+    private String randomFirstName;
+    private String randomLastName;
 
     public ContactUsSteps(BrowserManager browserManager) {
         this.browserManager = browserManager;
@@ -62,22 +64,26 @@ public class ContactUsSteps {
 
     @When("I enter a random first name")
     public void i_enter_a_random_first_name() {
-        page.locator("input[name='first_name']").fill(faker.name().firstName());
+        randomFirstName = faker.name().firstName();
+        page.locator("input[name='first_name']").fill(randomFirstName);
     }
 
     @And("I enter a random last name")
     public void i_enter_a_random_last_name() {
-        page.locator("input[name='last_name']").fill(faker.name().lastName());
+        randomLastName = faker.name().lastName();
+        page.locator("input[name='last_name']").fill(randomLastName);
     }
 
     @And("I enter a random email")
     public void i_enter_a_random_email() {
-        page.locator("input[name='email']").fill(faker.internet().emailAddress());
+        String email = (randomFirstName + "." + randomLastName + "@example.com").toLowerCase();
+        page.locator("input[name='email']").fill(email);
     }
 
     @And("I enter a random message")
     public void i_enter_a_random_message() {
-        page.locator("textarea[name='message']").fill(faker.lorem().sentence());
+        String message = "Hello, I would like more information about " + faker.commerce().productName() + ".";
+        page.locator("textarea[name='message']").fill(message);
     }
 
     @And("I click the Submit button")

@@ -35,7 +35,7 @@ All environment values are defined in `src/test/resources/config/config.properti
 Any key may be overridden at runtime via a JVM system property without modifying the properties file, for example:
 
 ```bash
-java -Dbrowser=firefox -cp "$CP" org.testng.TestNG -testclass runner.ContactUsRunner
+java -Dbrowser=firefox -cp "$CP" org.testng.TestNG -testclass runner.TestRunner
 ```
 
 ## Running the Suite
@@ -43,7 +43,7 @@ java -Dbrowser=firefox -cp "$CP" org.testng.TestNG -testclass runner.ContactUsRu
 ```bash
 mvn dependency:build-classpath -Dmdep.outputFile=/tmp/cp.txt -q
 CP=$(cat /tmp/cp.txt):target/classes:target/test-classes
-java -cp "$CP" org.testng.TestNG -testclass runner.ContactUsRunner
+java -cp "$CP" org.testng.TestNG -testclass runner.TestRunner
 ```
 
 ## Reporting
