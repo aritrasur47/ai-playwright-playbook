@@ -41,7 +41,8 @@ pipeline {
                         java -Dbrowser=${BROWSER} \
                              -Dheadless=true \
                              -Dcucumber.filter.tags="${CUCUMBER_TAGS}" \
-                             -cp "$CP" org.testng.TestNG -testclass runner.TestRunner
+                             -cp "$CP" org.testng.TestNG -testclass runner.TestRunner \
+                             -reporter org.testng.reporters.JUnitReportReporter
                     '''
                 }
             }
@@ -56,7 +57,7 @@ pipeline {
 
     post {
         always {
-            testNG(reportFilenamePattern: 'test-output/testng-results.xml')
+            junit testResults: 'test-output/junitreports/*.xml', allowEmptyResults: true
             archiveArtifacts artifacts: 'target/allure-results/**, target/site/allure-maven-plugin/**', allowEmptyArchive: true
         }
     }
