@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        PATH = "/opt/homebrew/opt/openjdk/bin:/opt/homebrew/bin:${env.PATH}"
+    }
+
     parameters {
         choice(name: 'BROWSER', choices: ['chromium', 'firefox'], description: 'Browser to run the suite against')
         string(name: 'CUCUMBER_TAGS', defaultValue: 'not @demo-failure', description: 'Cucumber tag expression to filter scenarios')
