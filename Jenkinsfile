@@ -46,7 +46,7 @@ pipeline {
 
     post {
         always {
-            step([$class: 'TestNGResultArchiver', testResultsPattern: 'test-output/testng-results.xml'])
+            testNG(testResultsPattern: 'test-output/testng-results.xml')
             archiveArtifacts artifacts: 'target/allure-results/**, target/site/allure-maven-plugin/**', allowEmptyArchive: true
         }
     }
